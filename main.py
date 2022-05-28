@@ -7,12 +7,14 @@ print("****** Get random advice ******")
 print(f'#{response["slip"]["id"]}: {response["slip"]["advice"]}"\n')
 
 print("****** Search advice ******")
-keyword = input("Keyword: ")
+keyword = input("Search term: ")
 res_object = requests.get(f'https://api.adviceslip.com/advice/search/{keyword}')
 response = res_object.json()
 #print(response)
 
-print(f'result(s): {response["total_results"]}')
-if len(response["slips"]) > 0:
-  for advice in response["slips"]:
-    print(f'#{advice["id"]}: {advice["advice"]}')
+if "message" in response:
+     print(response["message"]["text"])
+else:
+    print(f'result(s): {response["total_results"]}')
+    for advice in response["slips"]:
+      print(f'#{advice["id"]}: {advice["advice"]}')
